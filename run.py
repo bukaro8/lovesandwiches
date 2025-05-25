@@ -45,4 +45,5 @@ def validate_data(values):
         return None
 
 
-get_sales_data()
+data = get_sales_data()
+print(data)
