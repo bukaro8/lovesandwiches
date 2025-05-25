@@ -20,10 +20,12 @@ SHEET = GSPREAD_CLIENT.open("love_sandwiches")
 def get_sales_data():
     """Get sales figures input form the user """
     print("Please enter sales data form the last market\nData should be six numbers, separated by commas\nExample 10,20,30,40,50,60\n")
-    data_str = input('Enter your data here: ')
-
-    sales_data = data_str.split(",")
-    validate_data(sales_data)
+    while True:
+        data_str = input('Enter your data here: ')
+        sales_data = data_str.split(",")
+        validated_data = validate_data(sales_data)
+        if validated_data is not None:
+            return validated_data
 
 
 def validate_data(values):
@@ -32,16 +34,15 @@ def validate_data(values):
     Raises ValueError if string cannot be converted into int,
     or if there aren't exactly 6 values
     """
-    int_values = []
     try:
         if len(values) != 6:
             raise ValueError(
                 f"Data must be six numbers, separated by commas. you entered {len(values)}")
-        for value in values:
-            int_values.append(int(value))
+        int_values = [int(value) for value in values]
         return int_values
     except ValueError as e:
         print(e)
+        return None
 
 
 get_sales_data()
